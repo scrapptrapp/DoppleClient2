@@ -1,4 +1,4 @@
-# ☣ DoppleClient v1.0
+# ☣ DoppleClient v1.7
 
 > **Your computer. Not Microsoft's. Not anyone else's. YOURS.**
 

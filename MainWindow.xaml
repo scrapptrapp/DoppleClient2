@@ -6,59 +6,125 @@
 
     <Window.Resources>
         <Style x:Key="TechButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#111111"/>
-            <Setter Property="Foreground" Value="#39FF14"/>
-            <Setter Property="BorderBrush" Value="#39FF14"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#11000000"/>
+            <Setter Property="Foreground" Value="#FF0000"/>
+            <Setter Property="BorderBrush" Value="#660000"/>
+            <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Margin" Value="0,10,0,0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#FF0000"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
-    <Border CornerRadius="15" BorderBrush="#39FF14" BorderThickness="2" Background="#0A0A0A" ClipToBounds="True">
+    <Border CornerRadius="15" BorderBrush="#FF0000" BorderThickness="2" Background="Transparent" ClipToBounds="True">
         <Grid>
-            <Image Source="bg.webp" Stretch="UniformToFill" Opacity="0.3">
-                <Image.Effect><BlurEffect Radius="10"/></Image.Effect>
+
+            <Image Source="bg.webp" Stretch="UniformToFill" Opacity="1.0"
+                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image.Effect>
+                    <BlurEffect Radius="4"/>
+                </Image.Effect>
             </Image>
 
-            <DockPanel VerticalAlignment="Top" Height="40" Background="#111111" LastChildFill="False">
-                <TextBlock Text="☣ DOPPLE_OS v1.4" Foreground="#39FF14" VerticalAlignment="Center" Margin="15,0" FontWeight="Bold" Opacity="0.7"/>
-                <Button Content="✕" Click="Close_Click" DockPanel.Dock="Right" Width="40" Background="Transparent" Foreground="#39FF14" BorderThickness="0" FontSize="16"/>
-                <Button Content="—" Click="Min_Click" DockPanel.Dock="Right" Width="40" Background="Transparent" Foreground="#39FF14" BorderThickness="0" FontSize="16"/>
-                <Button Content="[ ABOUT ]" Click="About_Click" Style="{StaticResource TechButtonStyle}" Height="40" Foreground="#888888" BorderBrush="#888888"/>
+            <Border Background="#000000" Opacity="0.5"/>
+
+            <DockPanel LastChildFill="True" Background="Transparent">
+
+                <DockPanel x:Name="HeaderBar" Height="40" Background="#110000"
+                           DockPanel.Dock="Top" LastChildFill="False">
+
+                    <TextBlock Text="☣ DOPPLE_OS :: CORE_BREACH" Foreground="#FF0000"
+                               VerticalAlignment="Center" Margin="15,0" FontWeight="Bold"
+                               DockPanel.Dock="Left"/>
+
+                    <Button Content="✕" Click="Close_Click" DockPanel.Dock="Right"
+                            Width="40" Background="Transparent" Foreground="#FF0000"
+                            BorderThickness="0" FontSize="16"/>
+                    <Button Content="—" Click="Min_Click" DockPanel.Dock="Right"
+                            Width="40" Background="Transparent" Foreground="#FF0000"
+                            BorderThickness="0" FontSize="16"/>
+                    <Button Content="[ ABOUT ]" Click="About_Click" DockPanel.Dock="Right"
+                            Style="{StaticResource TechButtonStyle}"
+                            Height="30" Width="80" Margin="0,5,10,5"
+                            Foreground="#880000" BorderBrush="#440000"/>
+
+                    <Button x:Name="TorConnectButton" Click="TorConnect_Click"
+                            Content="[ TOR ON ]" Style="{StaticResource TechButtonStyle}"
+                            Height="30" Width="90" Margin="5,5,0,5"/>
+                    <Button x:Name="TorStopButton" Click="TorStop_Click"
+                            Content="[ TOR OFF ]" Style="{StaticResource TechButtonStyle}"
+                            Height="30" Width="90" Margin="5,5,0,5"/>
+
+                </DockPanel>
+
+                <Grid Background="Transparent">
+                    <StackPanel Margin="30,20,30,20">
+
+                        <TextBlock Text="☣ DOPPLE_CLIENT ☣" Foreground="#FF0000"
+                                   FontSize="36" FontWeight="ExtraBold"
+                                   HorizontalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="#FF0000" BlurRadius="20" ShadowDepth="0"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <Button x:Name="DoppleShieldButton"
+                                Content="[ INITIALIZE DOPPLE SHIELD ]"
+                                Click="DoppleShield_Click"
+                                Style="{StaticResource TechButtonStyle}"
+                                Height="60" FontSize="18"/>
+                        <Button Content="[ PURGE SYSTEM TELEMETRY ]"
+                                Click="KillGov_Click"
+                                Style="{StaticResource TechButtonStyle}" Height="40"/>
+                        <Button x:Name="UndoButton" Content="[ RESTORE DEFAULTS ]"
+                                Click="Undo_Click"
+                                Style="{StaticResource TechButtonStyle}"
+                                Height="40" Opacity="0.5"/>
+
+                        <Border Background="#EE000000" BorderBrush="#440000"
+                                BorderThickness="1" Margin="0,20,0,0" Height="150">
+                            <ScrollViewer x:Name="Scroller">
+                                <TextBlock x:Name="ConsoleLog" Foreground="#AA0000"
+                                           FontFamily="Consolas" FontSize="12"
+                                           Margin="10" TextWrapping="Wrap"
+                                           Text="> Booting..."/>
+                            </ScrollViewer>
+                        </Border>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom" Margin="15">
+                        <Ellipse x:Name="StatusLight" Width="12" Height="12" Fill="#440000">
+                            <Ellipse.Effect>
+                                <DropShadowEffect Color="Red" BlurRadius="15" ShadowDepth="0"/>
+                            </Ellipse.Effect>
+                        </Ellipse>
+                        <TextBlock x:Name="StatusText" Text="SYSTEM UNSECURED"
+                                   Foreground="#FF0000" FontSize="10"
+                                   Margin="8,0,0,0" VerticalAlignment="Center"
+                                   FontWeight="Bold"/>
+                    </StackPanel>
+                </Grid>
+
             </DockPanel>
 
-            <StackPanel Margin="30,60,30,20">
-                <TextBlock Text="☣ DOPPLE_CLIENT ☣" Foreground="#39FF14" FontSize="32" FontWeight="ExtraBold" HorizontalAlignment="Center">
-                    <TextBlock.Effect><DropShadowEffect Color="#39FF14" BlurRadius="20" ShadowDepth="0"/></TextBlock.Effect>
-                </TextBlock>
-
-                <Button x:Name="DoppleShieldButton" Content="[ INITIALIZE DOPPLE SHIELD ]" Click="DoppleShield_Click" Style="{StaticResource TechButtonStyle}" Height="60" FontSize="18"/>
-                <Button Content="[ PURGE SYSTEM TELEMETRY ]" Click="KillGov_Click" Style="{StaticResource TechButtonStyle}" Height="40"/>
-                <Button x:Name="UndoButton" Content="[ RESTORE WINDOWS UPDATE ]" Click="Undo_Click" Style="{StaticResource TechButtonStyle}" Height="40" Foreground="#FF6B6B" BorderBrush="#FF6B6B"/>
-                
-                <Border Background="#000000" BorderBrush="#39FF14" BorderThickness="1" Margin="0,20,0,0" Height="150" Opacity="0.8">
-                    <ScrollViewer x:Name="Scroller">
-                        <TextBlock x:Name="ConsoleLog" Foreground="#39FF14" FontFamily="Consolas" FontSize="12" Margin="10" TextWrapping="Wrap" Text="> Booting DoppleClient...&#x0a;> System scan initialized..."/>
-                    </ScrollViewer>
-                </Border>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
-                <Ellipse x:Name="StatusLight" Width="12" Height="12" Fill="Red">
-                    <Ellipse.Effect><DropShadowEffect Color="{Binding ElementName=StatusLight, Path=Fill.Color}" BlurRadius="15" ShadowDepth="0"/></Ellipse.Effect>
-                </Ellipse>
-                <TextBlock x:Name="StatusText" Text="BREACHED" Foreground="#39FF14" FontSize="10" Margin="8,0,0,0" VerticalAlignment="Center" FontWeight="Bold"/>
-            </StackPanel>
         </Grid>
     </Border>
 </Window>
